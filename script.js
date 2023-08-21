@@ -5,6 +5,7 @@ var words = [];
 var emails = [];
 
 function buttonclick() {
+    emails = [];
     if (document.getElementById("ms365").checked) {
         ms365();
     } else if (document.getElementById("gsuite").checked) {
@@ -106,7 +107,7 @@ function ms365_import() {
                 email = suffix + enfio[0].toLowerCase() + "." + sn.toLowerCase() + "." + enfio[2][0].toLowerCase() + "@" + domain;
             }
             emails[i] = email;
-            str = str + email + ',' + fio[1] + ',' + fio[0]+ "," + fio[1] + fio[0] + ",," + orgua + ",,,,,,,,,,\n";
+            str = str + email + ',' + fio[1] + ',' + fio[0] + "," + fio[1] + fio[0] + ",," + orgua + ",,,,,,,,,,\n";
         }
     }
     console.log(emails);
@@ -162,116 +163,127 @@ function isset_email(e) {
 }
 
 function transliteration(inputText) {
+    console.log(inputText);
+    words = inputText.split(/[\n]/);
     var rules = [
-        {'pattern': 'а', 'replace': 'a'},
-        {'pattern': 'б', 'replace': 'b'},
-        {'pattern': 'в', 'replace': 'v'},
-        {'pattern': 'зг', 'replace': 'zgh'},
-        {'pattern': 'Зг', 'replace': 'Zgh'},
-        {'pattern': 'г', 'replace': 'h'},
-        {'pattern': 'ґ', 'replace': 'g'},
-        {'pattern': 'д', 'replace': 'd'},
-        {'pattern': 'е', 'replace': 'e'},
-        {'pattern': '^є', 'replace': 'ye'},
-        {'pattern': 'є', 'replace': 'ie'},
-        {'pattern': 'ж', 'replace': 'zh'},
-        {'pattern': 'з', 'replace': 'z'},
-        {'pattern': 'и', 'replace': 'y'},
-        {'pattern': 'і', 'replace': 'i'},
-        {'pattern': '^ї', 'replace': 'yi'},
-        {'pattern': 'ї', 'replace': 'i'},
-        {'pattern': '^й', 'replace': 'y'},
-        {'pattern': 'й', 'replace': 'i'},
-        {'pattern': 'к', 'replace': 'k'},
-        {'pattern': 'л', 'replace': 'l'},
-        {'pattern': 'м', 'replace': 'm'},
-        {'pattern': 'н', 'replace': 'n'},
-        {'pattern': 'о', 'replace': 'o'},
-        {'pattern': 'п', 'replace': 'p'},
-        {'pattern': 'р', 'replace': 'r'},
-        {'pattern': 'с', 'replace': 's'},
-        {'pattern': 'т', 'replace': 't'},
-        {'pattern': 'у', 'replace': 'u'},
-        {'pattern': 'ф', 'replace': 'f'},
-        {'pattern': 'х', 'replace': 'kh'},
-        {'pattern': 'ц', 'replace': 'ts'},
-        {'pattern': 'ч', 'replace': 'ch'},
-        {'pattern': 'ш', 'replace': 'sh'},
-        {'pattern': 'щ', 'replace': 'shch'},
-        {'pattern': 'ьо', 'replace': 'io'},
-        {'pattern': 'ьї', 'replace': 'ii'},
-        {'pattern': 'ь', 'replace': ''},
-        {'pattern': '^ю', 'replace': 'yu'},
-        {'pattern': 'ю', 'replace': 'iu'},
-        {'pattern': '^я', 'replace': 'ya'},
-        {'pattern': 'я', 'replace': 'ia'},
-        {'pattern': 'А', 'replace': 'A'},
-        {'pattern': 'Б', 'replace': 'B'},
-        {'pattern': 'В', 'replace': 'V'},
-        {'pattern': 'Г', 'replace': 'H'},
-        {'pattern': 'Ґ', 'replace': 'G'},
-        {'pattern': 'Д', 'replace': 'D'},
-        {'pattern': 'Е', 'replace': 'E'},
-        {'pattern': '^Є', 'replace': 'Ye'},
-        {'pattern': 'Є', 'replace': 'Ie'},
-        {'pattern': 'Ж', 'replace': 'Zh'},
-        {'pattern': 'З', 'replace': 'Z'},
-        {'pattern': 'И', 'replace': 'Y'},
-        {'pattern': 'І', 'replace': 'I'},
-        {'pattern': '^Ї', 'replace': 'Yi'},
-        {'pattern': 'Ї', 'replace': 'I'},
-        {'pattern': '^Й', 'replace': 'Y'},
-        {'pattern': 'Й', 'replace': 'I'},
-        {'pattern': 'К', 'replace': 'K'},
-        {'pattern': 'Л', 'replace': 'L'},
-        {'pattern': 'М', 'replace': 'M'},
-        {'pattern': 'Н', 'replace': 'N'},
-        {'pattern': 'О', 'replace': 'O'},
-        {'pattern': 'П', 'replace': 'P'},
-        {'pattern': 'Р', 'replace': 'R'},
-        {'pattern': 'С', 'replace': 'S'},
-        {'pattern': 'Т', 'replace': 'T'},
-        {'pattern': 'У', 'replace': 'U'},
-        {'pattern': 'Ф', 'replace': 'F'},
-        {'pattern': 'Х', 'replace': 'Kh'},
-        {'pattern': 'Ц', 'replace': 'Ts'},
-        {'pattern': 'Ч', 'replace': 'Ch'},
-        {'pattern': 'Ш', 'replace': 'Sh'},
-        {'pattern': 'Щ', 'replace': 'Shch'},
-        {'pattern': 'Ь', 'replace': ''},
-        {'pattern': '^Ю', 'replace': 'Yu'},
-        {'pattern': 'Ю', 'replace': 'Iu'},
-        {'pattern': '^Я', 'replace': 'Ya'},
-        {'pattern': 'Я', 'replace': 'Ia'},
-        {'pattern': '’', 'replace': ''},
-        {'pattern': '\'', 'replace': ''},
-        {'pattern': '`', 'replace': ''}
+        { 'pattern': 'а', 'replace': 'a' },
+        { 'pattern': 'б', 'replace': 'b' },
+        { 'pattern': 'в', 'replace': 'v' },
+        { 'pattern': 'зг', 'replace': 'zgh' },
+        { 'pattern': 'Зг', 'replace': 'Zgh' },
+        { 'pattern': 'г', 'replace': 'h' },
+        { 'pattern': 'ґ', 'replace': 'g' },
+        { 'pattern': 'д', 'replace': 'd' },
+        { 'pattern': 'е', 'replace': 'e' },
+        { 'pattern': '^є', 'replace': 'ye' },
+        { 'pattern': 'є', 'replace': 'ie' },
+        { 'pattern': 'ж', 'replace': 'zh' },
+        { 'pattern': 'з', 'replace': 'z' },
+        { 'pattern': 'и', 'replace': 'y' },
+        { 'pattern': 'і', 'replace': 'i' },
+        { 'pattern': '^ї', 'replace': 'yi' },
+        { 'pattern': 'ї', 'replace': 'i' },
+        { 'pattern': '^й', 'replace': 'y' },
+        { 'pattern': 'й', 'replace': 'i' },
+        { 'pattern': 'к', 'replace': 'k' },
+        { 'pattern': 'л', 'replace': 'l' },
+        { 'pattern': 'м', 'replace': 'm' },
+        { 'pattern': 'н', 'replace': 'n' },
+        { 'pattern': 'о', 'replace': 'o' },
+        { 'pattern': 'п', 'replace': 'p' },
+        { 'pattern': 'р', 'replace': 'r' },
+        { 'pattern': 'с', 'replace': 's' },
+        { 'pattern': 'т', 'replace': 't' },
+        { 'pattern': 'у', 'replace': 'u' },
+        { 'pattern': 'ф', 'replace': 'f' },
+        { 'pattern': 'х', 'replace': 'kh' },
+        { 'pattern': 'ц', 'replace': 'ts' },
+        { 'pattern': 'ч', 'replace': 'ch' },
+        { 'pattern': 'ш', 'replace': 'sh' },
+        { 'pattern': 'щ', 'replace': 'shch' },
+        { 'pattern': 'ьо', 'replace': 'io' },
+        { 'pattern': 'ьї', 'replace': 'ii' },
+        { 'pattern': 'ь', 'replace': '' },
+        { 'pattern': '^ю', 'replace': 'yu' },
+        { 'pattern': 'ю', 'replace': 'iu' },
+        { 'pattern': '^я', 'replace': 'ya' },
+        { 'pattern': 'я', 'replace': 'ia' },
+        { 'pattern': 'А', 'replace': 'A' },
+        { 'pattern': 'Б', 'replace': 'B' },
+        { 'pattern': 'В', 'replace': 'V' },
+        { 'pattern': 'Г', 'replace': 'H' },
+        { 'pattern': 'Ґ', 'replace': 'G' },
+        { 'pattern': 'Д', 'replace': 'D' },
+        { 'pattern': 'Е', 'replace': 'E' },
+        { 'pattern': '^Є', 'replace': 'Ye' },
+        { 'pattern': 'Є', 'replace': 'Ie' },
+        { 'pattern': 'Ж', 'replace': 'Zh' },
+        { 'pattern': 'З', 'replace': 'Z' },
+        { 'pattern': 'И', 'replace': 'Y' },
+        { 'pattern': 'І', 'replace': 'I' },
+        { 'pattern': '^Ї', 'replace': 'Yi' },
+        { 'pattern': 'Ї', 'replace': 'I' },
+        { 'pattern': '^Й', 'replace': 'Y' },
+        { 'pattern': 'Й', 'replace': 'I' },
+        { 'pattern': 'К', 'replace': 'K' },
+        { 'pattern': 'Л', 'replace': 'L' },
+        { 'pattern': 'М', 'replace': 'M' },
+        { 'pattern': 'Н', 'replace': 'N' },
+        { 'pattern': 'О', 'replace': 'O' },
+        { 'pattern': 'П', 'replace': 'P' },
+        { 'pattern': 'Р', 'replace': 'R' },
+        { 'pattern': 'С', 'replace': 'S' },
+        { 'pattern': 'Т', 'replace': 'T' },
+        { 'pattern': 'У', 'replace': 'U' },
+        { 'pattern': 'Ф', 'replace': 'F' },
+        { 'pattern': 'Х', 'replace': 'Kh' },
+        { 'pattern': 'Ц', 'replace': 'Ts' },
+        { 'pattern': 'Ч', 'replace': 'Ch' },
+        { 'pattern': 'Ш', 'replace': 'Sh' },
+        { 'pattern': 'Щ', 'replace': 'Shch' },
+        { 'pattern': 'Ь', 'replace': '' },
+        { 'pattern': '^Ю', 'replace': 'Yu' },
+        { 'pattern': 'Ю', 'replace': 'Iu' },
+        { 'pattern': '^Я', 'replace': 'Ya' },
+        { 'pattern': 'Я', 'replace': 'Ia' },
+        { 'pattern': '’', 'replace': '' },
+        { 'pattern': '\'', 'replace': '' },
+        { 'pattern': '`', 'replace': '' }
     ];
 
-    words = inputText.split(/[ \t]+/);
-
+    words = inputText.split(/[\n]/);
+    console.log(words);
     var x = 0;
-    for (var n in words) {
+    for (var n = 0 in words) {
 
+        var fio_lat = '';
+        var fio_cyr = words[n];
+        var word = words[n].split(/[ \t]+/);
+        console.log(word);
+        var cword = [];
+        var cyrwords = []
+        for (var k = 0; k < word.length; k++) {
+            var lattext = word[k];
+            cyrwords.push(word[k])
+            for (var ruleNumber in rules) {
 
-        var word = words[n];
-        //console.log(word);
-        cword = words[n];
-        for (var ruleNumber in rules) {
-
-            word = word.replace(
+                lattext = lattext.replace(
                     new RegExp(rules[ruleNumber]['pattern'], 'gm'),
                     rules[ruleNumber]['replace']
-                    );
+                );
+            }
+            cword.push(lattext);
         }
-        lwords[x] = word;
+        words[x] = cyrwords.join(' ');
+        lwords[x] = cword.join(' ');
         x++;
-        inputText = inputText.replace(words[n], word);
+        inputText = inputText.replace(words[n], lwords[x]);
     }
 
 
     //console.log(inputText);
     console.log(words);
-    return inputText; //.toUpperCase()
+    console.log(lwords);
+    //return inputText; //.toUpperCase()
 }
 ;
