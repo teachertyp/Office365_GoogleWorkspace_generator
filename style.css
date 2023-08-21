@@ -1,0 +1,109 @@
+/* CSS files add styling rules to your content */
+
+body {
+    font-family: helvetica, arial, sans-serif;
+    margin: 2em;
+    padding:2em;
+}
+
+h1 {
+    font-style: italic;
+    color: #373fff;
+}
+#wrapper,footer{
+    padding:2em;
+}
+.redtext {
+    color:red;
+}
+
+.selservice{
+    background-color: #abd6ff;
+    padding: 5px 5px 5px 25px;
+    font-size: 16pt;
+    margin-bottom:25px;
+}
+
+.selservice *{
+    margin: 0;
+}
+
+.alert {
+    background-color: #e4b9c0;
+}
+
+
+textarea,input[type=text] {
+    width: inherit;
+}
+
+footer {
+    background-color: #abd6ff;
+}
+
+@media (max-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */
+    h2 {
+        font-size:1.5em!important;
+        text-align: center;
+        font-weight: bold!important;
+    }
+    body {
+        padding: 1rem;
+    }
+    .input-group {
+        flex-direction:column;
+    }
+
+    .input-group-text{
+        background-color: transparent!important;
+        border:none!important;
+        font-weight: bold!important;
+        padding: 0!important;
+    }
+    .input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control{
+        width: 100%!important;
+    }
+
+    .input-group>.custom-select:not(:first-child), .input-group>.form-control:not(:first-child) {
+        border-radius: 0.3rem!important;
+        border-radius: 0.3rem!important;
+    }
+}
+
+
+@media (max-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+    body {
+        padding: 1rem;
+    }
+    h2 {
+        font-size:1.5em!important;
+        text-align: center;
+        font-weight: bold!important;
+    }
+    .input-group {
+        flex-direction:column;
+    }
+
+    .input-group-text{
+        background-color: transparent!important;
+        border:none!important;
+        font-weight: bold!important;
+        padding: 0!important;
+    }
+    .input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control{
+        width: 100%!important;
+    }
+
+    .input-group>.custom-select:not(:first-child), .input-group>.form-control:not(:first-child) {
+        border-radius: 0.3rem!important;
+        border-radius: 0.3rem!important;
+    }
+}
+@media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
+}
+@media (min-width:1281px) { /* hi-res laptops and desktops */
+}

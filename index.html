@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:url"                content="http://typatest.pp.ua/g365gen/index.html" />
+        <meta property="og:type"               content="website" />
+        <meta property="og:title"              content="Генератор користувачів для Office365 та Gsuite for Education" />
+        <meta property="og:description"        content="Потрібно оновити паролі існуючих чи додати нових користувачів? Ця сторінка стане Вам у нагоді" />
+        <meta property="og:image"              content="https://www.turbotekcomputer.com/hubfs/G%20Suite%20vs%20Office%20365.jpg" />
+        <title>Генератор користувачів для Office365 та Gsuite for Education</title>
+
+        <!-- import the webpage's stylesheet -->
+        <link rel="stylesheet" href="style.css" />
+
+        <!-- import the webpage's javascript file -->
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous"
+            />
+        <script src="script.js" defer></script>
+    </head>
+    <body>
+        <div id="container">
+            <!-- <input id="Title" name="Title" value="" type="text" /> -->
+            <h2>Генерація користувачів для Office365 та GSuite for Education</h2>
+            <div>
+                <h3>Інструкція</h3>
+                <ol>
+                    <li>Введіть ім'я домену для якого створюється список.</li>
+                    <li>Введіть ідентифікатор школи (за потреби).</li>
+                    <li>
+                        Вставте список користувачів у перше текстове поле (те, що ліворуч) і натисніть кнопку
+                        "Створити список".
+                    </li>
+                </ol>
+            </div>                
+            <div class="alert">
+                <strong>Зверніть увагу</strong>
+                <ul>
+                    <li >Кожен учень повинен мати ПРІЗВИЩЕ ІМʼЯ ТА ПО БАТЬКОВІ РОЗДІЛЕНІ <strong>ОДНИМ ПРОБІЛОМ</strong> АБО символом <strong>ТАБУЛЯЦІЇ</strong> (якщо в Excel ініціали у різних клітинках)!</li>  
+                    <li>Електронна пошта буде у форматі <strong>prizvishche.i.p@yourdomain.com</strong></li>
+                    <li>Якщо є співпадіння по ініціалам, наприклад Іванов Іван та Іванов Ілля то наступній людині до ініціалу імені буде додаватися літера</li>  
+                    <li>Файл формату csv буде збережено на Ваш комп'ютер або можна скопіювати текст із текстового поля праворуч.</li>
+                    <li>Ідентифікатор школи додається за необхідності, буде додано на початку email:  s30_ivanov.i.i@yourdomain.com)</li>
+                </ul>
+
+            </div>
+            <h4>Оберіть сервіс</h4>
+            <div class="selservice">
+                <div>
+                    <input type="radio" id="ms365" value="ms365" name="orgua">
+                    <label for="ms365">Microsoft 365</label>
+                </div>
+                <div>
+                    <input type="radio" id="gsuite" value="gsuite" name="orgua" checked>
+                    <label for="gsuite">GSuite for Education</label>            
+                </div>
+            </div>            
+            <div class="row" style="padding: 0 15px;">
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Домен*</span>
+                    </div>
+                    <input type="text" class="form-control"name="yourdomain" id="yourdomain" placeholder="yourdomain.com"  value=""  required />
+                </div>
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Організаційний підрозділ*</span>
+                    </div>
+                    <input type="text" class="form-control" name="orgua" id="orgua" placeholder="Учні/1 Клас"  value=""  required />
+                </div>
+ 
+                <div class="input-group mb-3 input-group-lg">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Ідентифікатор школи</span>
+                    </div>
+                    <input type="text" class="form-control" name="emailsuffix" id="emailsuffix" placeholder=""  value=""  />
+                </div>
+                </div><!-- comment -->   
+              
+
+            
+            <div class="row">
+                <div class="col-sm">
+                    <textarea rows="20" cols="70" id="Title" onkeyup="" name="Title" value="" type="text" placeholder="Вставте список користувачів. Кожен з нового рядка (Іванов Іван Іванович)"></textarea>
+                </div>
+                <div class="col-sm">
+                    <textarea rows="20" cols="70" id="OfficeImport" name="GSuiteImport" value="" type="text"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Створити список" onclick="buttonclick()" />
+            </div>
+            <p>Скрипт для конвертації взято  <a href="https://dmsu.gov.ua/services/transliteration.html">тут</a></p>
+        </div>
+
+        <footer>
+            <p>
+                <strong>Автор:</strong> Терещенко Юрій Петрович, Кременчуцький ліцей №30 "Олімп" імені Н.М. Шевченко.
+
+            </p>
+            <p>
+                <strong>Потрібна допомога?</strong> <a href="mailto:yurchikte@gmail.com">yurchikte@gmail.com</a>
+            </p>
+            <center>Сподобався проєкт? <a href="https://donatello.to/teachertyp" target="_blank">Підтримайте автора</a></center>
+        </footer>
+    </body>
+</html>
