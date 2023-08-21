@@ -248,7 +248,8 @@ function transliteration(inputText) {
         {'pattern': '`', 'replace': ''}
     ];
 
-    words = inputText.split(/[\n]/);
+    words = inputText.split(/[ \t]+/);
+
     var x = 0;
     for (var n in words) {
 
