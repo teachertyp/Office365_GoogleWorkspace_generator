@@ -3,169 +3,7 @@
 var lwords = [];
 var words = [];
 var emails = [];
-
-function buttonclick() {
-    emails = [];
-    if (document.getElementById("ms365").checked) {
-        ms365();
-    } else if (document.getElementById("gsuite").checked) {
-        gsuite();
-    }
-}
-
-
-function ms365() {
-    var CyrUserFIO = document.getElementById('Title').value;
-    var domain = document.getElementById('yourdomain').value;
-    var suffix = document.getElementById('emailsuffix').value;
-    var orgua = document.getElementById('orgua').value;
-    transliteration(CyrUserFIO);
-    var exportData = document.getElementById('OfficeImport').value = 'Ім’я користувача,Ім’я,Прізвище,Коротке ім’я,Посада,Відділ,Номер офісу,Робочий телефон,Мобільний телефон,Факс,Додаткова адреса електронної пошти,Адреса,Місто,Область або республіка,Поштовий індекс,Країна або регіон' + '\n' + ms365_import();
-    //console.log(CyrUserFIO);
-    var a = document.createElement('a');
-    var orgua = orgua.replace('/', '-');
-    var orgua = orgua.replace('/ /g', '_');
-    var filename = orgua + 'data.csv';
-    var data = 'data:application/csv;charset=utf-8,' + encodeURIComponent(exportData);
-    a.href = data;
-    a.target = '_blank';
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-}
-
-function gsuite() {
-    var CyrUserFIO = document.getElementById('Title').value;
-    var domain = document.getElementById('yourdomain').value;
-    var suffix = document.getElementById('emailsuffix').value;
-    var orgua = document.getElementById('orgua').value;
-
-    var orgua = orgua.replace('/', '-');
-    var orgua = orgua.replace('/ /ig', '_');
-    transliteration(CyrUserFIO);
-    var exportData = document.getElementById('OfficeImport').value = 'First Name [Required],Last Name [Required],Email Address [Required],Password [Required],Password Hash Function [UPLOAD ONLY],Org Unit Path [Required],New Primary Email [UPLOAD ONLY],Recovery Email,Home Secondary Email,Work Secondary Email,Recovery Phone [MUST BE IN THE E.164 FORMAT],Work Phone,Home Phone,Mobile Phone,Work Address,Home Address,Employee ID,Employee Type,Employee Title,Manager Email,Department,Cost Center,Building ID,Floor Name,Floor Section,Change Password at Next Sign-In,New Status [UPLOAD ONLY],Advanced Protection Program enrollment' + '\n' + gsuite_import();
-    //console.log(CyrUserFIO);
-    var a = document.createElement('a');
-    var filename = orgua + '-passwords.csv';
-    var data = 'data:application/csv;charset=utf-8,' + encodeURIComponent(exportData);
-    a.href = data;
-    a.target = '_blank';
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-}
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
-
-function randomstring(L) {
-    var s = '';
-    var randomchar = function () {
-        var n = Math.floor(Math.random() * 62);
-        if (n < 10)
-            return n; //1-10
-        if (n < 36)
-            return String.fromCharCode(n + 55); //A-Z
-        return String.fromCharCode(n + 61); //a-z
-    }
-    while (s.length < L)
-        s += randomchar();
-    return s;
-}
-
-function ms365_import() {
-    var str = "";
-    var suffix = document.getElementById('emailsuffix').value;
-    suffix = suffix != "" ? suffix + "_" : "";
-    var domain = document.getElementById('yourdomain').value;
-    var orgua = document.getElementById('orgua').value;
-    for (i in words) {
-        var fio = words[i].split('\t');
-        console.log(fio);
-        var enfio = lwords[i].split('\t');
-        console.log(enfio);
-        if (fio.length < 3) {
-            fio = words[i].split(" ");
-            enfio = lwords[i].split(" ");
-            console.log(fio);
-            console.log(enfio);
-        }
-        if (fio.length < 3) {
-            fio[2] = 's';
-            enfio[2] = 's';
-        }
-        if (Array.isArray(fio) && Array.isArray(enfio) && fio.length == 3 && enfio.length == 3) {
-            console.log('Створюємо електронні адреси..........')
-            var ns = 1;
-            var sn = enfio[1][0];
-
-            var email = suffix + enfio[0].toLowerCase() + "." + enfio[1][0].toLowerCase() + "." + enfio[2][0].toLowerCase() + "@" + domain;
-            while (isset_email(email)) {
-                sn = sn + enfio[1][ns];
-                ns += 1;
-                email = suffix + enfio[0].toLowerCase() + "." + sn.toLowerCase() + "." + enfio[2][0].toLowerCase() + "@" + domain;
-            }
-            emails[i] = email;
-            str = str + email + ',' + fio[1] + ',' + fio[0] + "," + fio[1] + fio[0] + ",," + orgua + ",,,,,,,,,,\n";
-        }
-    }
-    console.log(emails);
-    return str;
-}
-
-function gsuite_import() {
-    var str = "";
-    var suffix = document.getElementById('emailsuffix').value;
-    suffix = suffix != "" ? suffix + "_" : "";
-    var domain = document.getElementById('yourdomain').value;
-    var orgua = document.getElementById('orgua').value;
-    for (i in words) {
-        var fio = words[i].split('\t');
-        console.log(fio);
-        var enfio = lwords[i].split('\t');
-        console.log(enfio);
-        if (fio.length < 3) {
-            fio = words[i].split(" ");
-            enfio = lwords[i].split(" ");
-            console.log(fio);
-            console.log(enfio);
-        }
-        if (fio.length < 3) {
-            fio[2] = 's';
-            enfio[2] = 's';
-        }
-        if (Array.isArray(fio) && Array.isArray(enfio) && fio.length == 3 && enfio.length == 3) {
-            console.log('Створюємо електронні адреси..........')
-            var ns = 1;
-            var sn = enfio[1][0];
-
-            var email = suffix + enfio[0].toLowerCase() + "." + enfio[1][0].toLowerCase() + "." + enfio[2][0].toLowerCase() + "@" + domain;
-            while (isset_email(email)) {
-                sn = sn + enfio[1][ns];
-                ns += 1;
-                email = suffix + enfio[0].toLowerCase() + "." + sn.toLowerCase() + "." + enfio[2][0].toLowerCase() + "@" + domain;
-            }
-            emails[i] = email;
-            str = str + fio[1] + "," + fio[0] + "," + email + ", " + randomstring(8) + ",," + "/" + orgua + ",,,,,,,,,,,,,,,,,,,,,,\n";
-        }
-    }
-    console.log(emails);
-    return str;
-}
-
-function isset_email(e) {
-    if (emails.includes(e)) {
-        console.log(e + " вже є у списку");
-        return true;
-    }
-    return false;
-}
-
-function transliteration(inputText) {
-    console.log(inputText);
-    words = inputText.split(/[\n]/);
-    var rules = [
+var rules = [
         { 'pattern': 'а', 'replace': 'a' },
         { 'pattern': 'б', 'replace': 'b' },
         { 'pattern': 'в', 'replace': 'v' },
@@ -250,40 +88,149 @@ function transliteration(inputText) {
         { 'pattern': '\'', 'replace': '' },
         { 'pattern': '`', 'replace': '' }
     ];
-
+    var lwords = [];
+    var words = [];
+    var emails = [];
+    
+    function buttonclick() {
+        emails = [];
+        if (document.getElementById("ms365").checked) {
+            ms365();
+        } else if (document.getElementById("gsuite").checked) {
+            gsuite();
+        }
+    }
+    
+    function ms365() {
+        var CyrUserFIO = document.getElementById('Title').value;
+        var domain = document.getElementById('yourdomain').value;
+        var suffix = document.getElementById('emailsuffix').value;
+        var orgua = document.getElementById('orgua').value;
+        transliteration(CyrUserFIO);
+        var exportData = 'Ім’я користувача,Ім’я,Прізвище,Коротке ім’я,Посада,Відділ,Номер офісу,Робочий телефон,Мобільний телефон,Факс,Додаткова адреса електронної пошти,Адреса,Місто,Область або республіка,Поштовий індекс,Країна або регіон\n' + ms365_import();
+        downloadCSV(exportData, orgua + 'data.csv');
+    }
+    
+    function gsuite() {
+        var CyrUserFIO = document.getElementById('Title').value;
+        var domain = document.getElementById('yourdomain').value;
+        var suffix = document.getElementById('emailsuffix').value;
+        var orgua = document.getElementById('orgua').value;
+        transliteration(CyrUserFIO);
+        var exportData = 'First Name [Required],Last Name [Required],Email Address [Required],Password [Required],Password Hash Function [UPLOAD ONLY],Org Unit Path [Required],New Primary Email [UPLOAD ONLY],Recovery Email,Home Secondary Email,Work Secondary Email,Recovery Phone [MUST BE IN THE E.164 FORMAT],Work Phone,Home Phone,Mobile Phone,Work Address,Home Address,Employee ID,Employee Type,Employee Title,Manager Email,Department,Cost Center,Building ID,Floor Name,Floor Section,Change Password at Next Sign-In,New Status [UPLOAD ONLY],Advanced Protection Program enrollment\n' + gsuite_import();
+        downloadCSV(exportData, orgua + '-passwords.csv');
+    }
+    
+    function downloadCSV(data, filename) {
+        document.getElementById('OfficeImport').value = data;
+        var a = document.createElement('a');
+        var dataUri = 'data:application/csv;charset=utf-8,' + encodeURIComponent(data);
+        a.href = dataUri;
+        a.target = '_blank';
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+    }
+    
+    function importData(rules, suffix, domain, orgua, importFunction) {
+        var str = "";
+        for (var i = 0; i < words.length; i++) {
+            var fio = words[i].split('\t');
+            var enfio = lwords[i].split('\t');
+    
+            if (fio.length < 3) {
+                fio = words[i].split(" ");
+                enfio = lwords[i].split(" ");
+            }
+            
+            if (fio.length < 3) {
+                fio[2] = 's';
+                enfio[2] = 's';
+            }
+    
+            if (Array.isArray(fio) && Array.isArray(enfio) && fio.length === 3 && enfio.length === 3) {
+                var ns = 1;
+                var sn = enfio[1][0];
+                var email = suffix + enfio[0].toLowerCase() + "." + enfio[1][0].toLowerCase() + "." + enfio[2][0].toLowerCase() + "@" + domain;
+    
+                while (emails.includes(email)) {
+                    sn = sn + enfio[1][ns];
+                    ns += 1;
+                    email = suffix + enfio[0].toLowerCase() + "." + sn.toLowerCase() + "." + enfio[2][0].toLowerCase() + "@" + domain;
+                }
+    
+                emails[i] = email;
+                str += importFunction(fio, enfio, email, orgua);
+            }
+        }
+        return str;
+    }
+    
+    function ms365_import() {
+        var suffix = document.getElementById('emailsuffix').value;
+        suffix = suffix ? suffix + "_" : "";
+        var domain = document.getElementById('yourdomain').value;
+        var orgua = document.getElementById('orgua').value;
+        return importData(rules, suffix, domain, orgua, ms365_importLine);
+    }
+    
+    function ms365_importLine(fio, enfio, email, orgua) {
+        return email + ',' + fio[1] + ',' + fio[0] + "," + fio[1] + fio[0] + ",," + orgua + ",,,,,,,,,,\n";
+    }
+    
+    function gsuite_import() {
+        var suffix = document.getElementById('emailsuffix').value;
+        suffix = suffix ? suffix + "_" : "";
+        var domain = document.getElementById('yourdomain').value;
+        var orgua = document.getElementById('orgua').value;
+        return importData(rules, suffix, domain, orgua, gsuite_importLine);
+    }
+    
+    function gsuite_importLine(fio, enfio, email, orgua) {
+        return fio[1] + "," + fio[0] + "," + email + ", " + randomstring(8) + ",," + "/" + orgua + ",,,,,,,,,,,,,,,,,,,,,,\n";
+    }
+    
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+    
+    function randomstring(L) {
+        var s = '';
+        var randomchar = function () {
+            var n = Math.floor(Math.random() * 62);
+            if (n < 10)
+                return n; //1-10
+            if (n < 36)
+                return String.fromCharCode(n + 55); //A-Z
+            return String.fromCharCode(n + 61); //a-z
+        }
+        while (s.length < L)
+            s += randomchar();
+        return s;
+    }
+    
+function transliteration(inputText) {
     words = inputText.split(/[\n]/);
-    console.log(words);
-    var x = 0;
-    for (var n = 0 in words) {
-
-        var fio_lat = '';
-        var fio_cyr = words[n];
+    for (var n = 0; n < words.length; n++) {
         var word = words[n].split(/[ \t]+/);
-        console.log(word);
         var cword = [];
-        var cyrwords = []
+        var cyrwords = [];
+
         for (var k = 0; k < word.length; k++) {
             var lattext = word[k];
-            cyrwords.push(word[k])
-            for (var ruleNumber in rules) {
+            cyrwords.push(word[k]);
 
+            for (var ruleNumber = 0; ruleNumber < rules.length; ruleNumber++) {
                 lattext = lattext.replace(
                     new RegExp(rules[ruleNumber]['pattern'], 'gm'),
                     rules[ruleNumber]['replace']
                 );
             }
+
             cword.push(lattext);
         }
-        words[x] = cyrwords.join(' ');
-        lwords[x] = cword.join(' ');
-        x++;
-        inputText = inputText.replace(words[n], lwords[x]);
+
+        words[n] = cyrwords.join(' ');
+        lwords[n] = cword.join(' ');
     }
-
-
-    //console.log(inputText);
-    console.log(words);
-    console.log(lwords);
-    //return inputText; //.toUpperCase()
 }
-;
